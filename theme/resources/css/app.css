@@ -1,0 +1,105 @@
+@import "tailwindcss" theme(static);
+@source "../../app/**/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+@import "./tokens.css";
+
+/* Dialog modal (NavDrawer, SearchModal): cegah scroll halaman di belakang tanpa overflow:hidden di body */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: color-mix(in srgb, var(--color-inverse) 50%, transparent);
+}
+
+/* FontResizer: mode "Teks Besar" untuk isi artikel (rem, ikut ukuran teks OS). Pakai class .article-body pada isi artikel */
+html[data-text-size="large"] .article-body {
+  font-size: var(--text-body-large);
+  line-height: var(--text-body-large--line-height);
+}
+
+/* Isi artikel (Single): ritme vertikal & elemen editor WordPress, hanya token */
+.article-body > * + * {
+  margin-top: var(--spacing-6);
+}
+.article-body h2,
+.article-body h3 {
+  font-size: var(--text-subhead);
+  line-height: var(--text-subhead--line-height);
+  font-weight: var(--text-subhead--font-weight);
+  margin-top: var(--spacing-8);
+}
+.article-body a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.article-body ul,
+.article-body ol {
+  padding-inline-start: var(--spacing-6);
+}
+.article-body ul { list-style: disc; }
+.article-body ol { list-style: decimal; }
+.article-body blockquote {
+  border-inline-start: 3px solid var(--color-accent);
+  padding-inline-start: var(--spacing-4);
+  font-size: var(--text-lead);
+  line-height: var(--text-lead--line-height);
+  font-weight: var(--text-lead--font-weight);
+}
+.article-body img,
+.article-body video,
+.article-body iframe {
+  max-width: 100%;
+  height: auto;
+}
+.article-body figcaption {
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  line-height: var(--text-meta--line-height);
+  color: var(--color-muted);
+  margin-top: var(--spacing-2);
+}
+
+/* CategoryStrip: scroll native tanpa scrollbar; pudar di tepi yang masih bisa digulir (scroll-driven animation, progressive enhancement) */
+.category-strip {
+  scrollbar-width: none;
+}
+.category-strip::-webkit-scrollbar {
+  display: none;
+}
+@property --strip-fade-start {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --strip-fade-end {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@keyframes strip-fade {
+  0% {
+    --strip-fade-start: 0rem;
+    --strip-fade-end: 2rem;
+  }
+  10% {
+    --strip-fade-start: 2rem;
+  }
+  90% {
+    --strip-fade-end: 2rem;
+  }
+  100% {
+    --strip-fade-start: 2rem;
+    --strip-fade-end: 0rem;
+  }
+}
+@supports (animation-timeline: scroll()) {
+  .category-strip {
+    mask-image: linear-gradient(to right, transparent 0, var(--color-inverse) var(--strip-fade-start), var(--color-inverse) calc(100% - var(--strip-fade-end)), transparent 100%);
+    animation: strip-fade linear both;
+    animation-timeline: scroll(self inline);
+  }
+}

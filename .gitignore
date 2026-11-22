@@ -1,0 +1,6 @@
+node_modules/
+vendor/
+theme/public/*
+!theme/public/.gitkeep
+.env
+*.log

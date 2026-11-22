@@ -1,0 +1,41 @@
+@import "tailwindcss" theme(static);
+@import "./tokens.css";
+
+/* Tampilan konten editor Gutenberg mengikuti front-end (token yang sama). */
+.editor-styles-wrapper {
+  background-color: var(--color-canvas);
+  color: var(--color-primary);
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+}
+/* Hierarki: judul artikel > subjudul > isi. Ukuran dari token (sama dengan halaman Single). */
+.editor-styles-wrapper .editor-post-title,
+.editor-styles-wrapper .editor-post-title__input,
+.editor-styles-wrapper .wp-block-post-title {
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+  font-size: var(--text-hero);
+  line-height: var(--text-hero--line-height);
+  letter-spacing: var(--text-hero--letter-spacing);
+  font-weight: var(--text-hero--font-weight);
+}
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2 {
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+  font-size: var(--text-subhead);
+  line-height: var(--text-subhead--line-height);
+  font-weight: var(--text-subhead--font-weight);
+}
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4 {
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  font-weight: 700;
+}
+.editor-styles-wrapper a {
+  color: var(--color-accent);
+}
