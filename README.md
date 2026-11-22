@@ -5,6 +5,8 @@ Tema WordPress untuk situs berita Palestina Update, dibangun di atas Roots Sage 
 > [!NOTE]
 > Repo ini adalah salinan publik dari kode tema. Pengembangan, dokumentasi internal, dan deploy dikelola di repo terpisah, jadi isi repo ini diperbarui berkala.
 
+**Dokumentasi lengkap** untuk memasang dan mengadaptasi tema ini tersedia di <https://anamfathonaya.github.io/plstn-u/>. Sumbernya ada di folder `docs/` dan di-build dengan Zensical.
+
 ## Stack
 
 | Lapisan | Teknologi | Versi |

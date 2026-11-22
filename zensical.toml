@@ -1,0 +1,50 @@
+[project]
+site_name = "Plstn-U — Dokumentasi Tema"
+site_description = "Panduan memasang dan mengadaptasi tema WordPress Plstn-U (Sage 11 + Tailwind CSS v4)"
+site_url = "https://anamfathonaya.github.io/plstn-u/"
+repo_url = "https://github.com/anamfathonaya/plstn-u"
+repo_name = "plstn-u"
+docs_dir = "docs"
+site_dir = "site"
+nav = [
+  { "Beranda" = "index.md" },
+  { "Persyaratan" = "persyaratan.md" },
+  { "Instalasi" = "instalasi.md" },
+  { "Konfigurasi" = "konfigurasi.md" },
+  { "Kustomisasi" = "kustomisasi.md" },
+  { "Arsitektur" = "arsitektur.md" },
+]
+
+[project.theme]
+language = "id"
+features = [
+  "content.code.copy",
+  "content.tabs.link",
+  "navigation.footer",
+  "navigation.instant",
+  "navigation.path",
+  "navigation.top",
+  "search.highlight",
+]
+
+# Light-only, selaras dengan tema
+[[project.theme.palette]]
+scheme = "default"
+primary = "black"
+accent = "green"
+
+[project.markdown_extensions]
+abbr = {}
+admonition = {}
+attr_list = {}
+def_list = {}
+footnotes = {}
+md_in_html = {}
+toc.permalink = true
+tables = {}
+pymdownx.details = {}
+pymdownx.highlight.anchor_linenums = true
+pymdownx.inlinehilite = {}
+pymdownx.superfences = {}
+pymdownx.tabbed.alternate_style = true
+pymdownx.tasklist.custom_checkbox = true
