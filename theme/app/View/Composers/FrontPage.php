@@ -14,8 +14,26 @@ class FrontPage extends Composer
         'front-page',
     ];
 
-    /** Rubrik yang ditampilkan sebagai blok kartu (slug kategori), berurutan. */
-    protected const SECTIONS = ['gaza', 'tepi-barat', 'internasional'];
+    /** Bawaan rubrik blok kartu bila Customizer belum diisi (slug kategori, berurutan). */
+    public const SECTIONS = ['gaza', 'tepi-barat', 'internasional'];
+
+    /**
+     * Rubrik blok kartu dari Customizer (3 slot), slot kosong dilewati, duplikat dibuang.
+     *
+     * @return array<int, string>
+     */
+    protected function sectionSlugs(): array
+    {
+        $slugs = [];
+        foreach (self::SECTIONS as $i => $default) {
+            $slug = (string) get_theme_mod('pu_home_category_'.($i + 1), $default);
+            if ($slug !== '') {
+                $slugs[] = $slug;
+            }
+        }
+
+        return array_values(array_unique($slugs));
+    }
 
     /** Ukuran kolam kiriman terbaru (satu query untuk seluruh beranda). */
     protected const POOL = 40;
@@ -54,12 +72,13 @@ class FrontPage extends Composer
             ];
         }
 
+        $slugs = $this->sectionSlugs();
         $terms = [];
-        foreach (get_terms(['taxonomy' => 'category', 'slug' => self::SECTIONS, 'hide_empty' => false]) as $t) {
+        foreach (! $slugs ? [] : get_terms(['taxonomy' => 'category', 'slug' => $slugs, 'hide_empty' => false]) as $t) {
             $terms[$t->slug] = $t;
         }
 
-        foreach (self::SECTIONS as $slug) {
+        foreach ($slugs as $slug) {
             $term = $terms[$slug] ?? null;
             if (! $term) {
                 continue;

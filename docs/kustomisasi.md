@@ -77,9 +77,11 @@ Deklarasi `@font-face` ada di bagian atas `tokens.css`. Untuk mengganti font:
 
 ## Logo dan favicon
 
-- **Tanda logo (28 px).** Berkas `theme/resources/images/favicon.svg` dipakai di navbar dan drawer lewat `App::logoUrl()`. Ganti berkas ini dengan SVG Anda, lalu build ulang.
+- **Logo situs.** Unggah logo di **Appearance > Customize > Site Identity > Logo**. Logo ini dipakai di navbar dan drawer. Jika belum diisi, navbar dan drawer memakai `theme/resources/images/favicon.svg`.
+- **Placeholder gambar.** Kartu tanpa gambar unggulan memakai `favicon.svg` (tidak terpengaruh logo kustom). Ganti berkas ini dengan SVG Anda, lalu build ulang.
 - **Singkatan di mobile.** Navbar menampilkan teks `shortName` (default `PU`) di layar kecil. Nilai default ada di `theme/resources/views/components/navbar.blade.php`. Ubah nilai tersebut bila Anda memakai singkatan lain.
 - **Nama situs.** Nama yang tampil di navbar, drawer, footer, dan judul feed berasal dari **Settings > General > Site Title**. Tidak ditulis langsung di kode.
+- **Menu dan kategori.** Navigasi dan footer mengikuti menu yang Anda tetapkan di **Appearance > Menus**, atau kategori bila belum ditetapkan. Lihat [Konfigurasi](konfigurasi.md#menu-navigasi).
 - **Screenshot tema.** `theme/screenshot.png` (1200 x 900) dipakai WordPress di daftar tema. Ganti sesuai identitas Anda.
 - **Copyright.** Footer menampilkan "© tahun nama situs" (`App::copyright()`).
 
@@ -109,7 +111,7 @@ Ubah teks di tempat ini, atau buat terjemahan (lihat berikut).
 
 ## Metadata tema
 
-Ubah header di `theme/style.css` (`Theme Name`, `Theme URI`, `Author`, `Description`, `Version`). Nama tema tampil di daftar tema WordPress. Slug tema mengikuti nama folder, jadi ubah nama folder dan `vite.config.js` (lihat [Instalasi](instalasi.md#4-sesuaikan-base-dan-app_url)) bila Anda mengganti slug.
+Ubah header di `theme/style.css` (`Theme Name`, `Theme URI`, `Author`, `Description`, `Version`). Nama tema tampil di daftar tema WordPress. Slug tema mengikuti nama folder, jadi ubah nama folder dan `vite.config.js` (lihat [Instalasi](instalasi.md#4-sesuaikan-base)) bila Anda mengganti slug.
 
 ## Lisensi
 

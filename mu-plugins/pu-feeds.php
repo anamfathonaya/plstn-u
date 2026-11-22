@@ -48,7 +48,10 @@ if (! function_exists('pu_feeds_bloginfo')) {
     function pu_feeds_bloginfo($output, $show = '')
     {
         if ($show === 'language') {
-            return 'id';
+            // Format WordPress (mis. "id-ID") valid untuk <language> RSS.
+            $language = get_option('WPLANG') ?: get_locale();
+
+            return $language ? str_replace('_', '-', $language) : 'id';
         }
 
         return $output;

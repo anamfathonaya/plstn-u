@@ -30,8 +30,19 @@ class App extends Composer
         return esc_url(home_url('/'));
     }
 
-    /** URL logo mark (favicon) dari aset Vite. */
+    /** URL logo: custom logo Customizer bila ada, jika tidak logo mark (favicon) dari aset Vite. */
     public function logoUrl(): string
+    {
+        $id = (int) get_theme_mod('custom_logo', 0);
+        if ($id && ($custom = wp_get_attachment_image_url($id, 'full'))) {
+            return esc_url($custom);
+        }
+
+        return esc_url(Vite::asset('resources/images/favicon.svg'));
+    }
+
+    /** Logo mark bawaan (favicon) untuk placeholder gambar, tidak terpengaruh logo kustom. */
+    public function markUrl(): string
     {
         return esc_url(Vite::asset('resources/images/favicon.svg'));
     }
@@ -45,6 +56,16 @@ class App extends Composer
     /** Tujuan tombol Live (kabar terkini). */
     public function liveUrl(): string
     {
+        $custom = esc_url((string) get_theme_mod('pu_live_url', ''));
+        if ($custom !== '') {
+            return $custom;
+        }
+
+        $id = (int) get_theme_mod('pu_news_page', 0);
+        if ($id && get_post_status($id) === 'publish') {
+            return esc_url(get_permalink($id));
+        }
+
         return $this->pageUrl('kabar-terkini') ?: NewsIndex::url();
     }
 
@@ -61,6 +82,10 @@ class App extends Composer
      */
     public function navItems(): array
     {
+        if ($menu = $this->menuTree('primary_navigation')) {
+            return $menu;
+        }
+
         $terms = $this->categoryTerms();
 
         $children = [];
@@ -117,6 +142,14 @@ class App extends Composer
      */
     public function categoryStrip(): array
     {
+        if ($menu = $this->menuTree('primary_navigation')) {
+            return array_map(fn ($item) => [
+                'label' => $item['label'],
+                'url' => $item['url'],
+                'active' => $item['active'],
+            ], $menu);
+        }
+
         $items = [[
             'label' => __('Terkini', 'sage'),
             'url' => esc_url(home_url('/')),
@@ -180,6 +213,10 @@ class App extends Composer
      */
     public function footerLinks(): array
     {
+        if ($menu = $this->menuTree('footer_navigation')) {
+            return array_map(fn ($item) => ['label' => $item['label'], 'url' => $item['url']], $menu);
+        }
+
         $links = [];
         foreach (['tentang' => __('Tentang', 'sage'), 'redaksi' => __('Redaksi', 'sage'), 'kontak' => __('Kontak', 'sage')] as $slug => $label) {
             // Hanya halaman yang benar-benar ada (situs baru belum punya halaman ini).
@@ -189,6 +226,79 @@ class App extends Composer
         }
 
         return $links;
+    }
+
+    /**
+     * Item menu WordPress pada lokasi tertentu sebagai pohon bersih (dua tingkat),
+     * atau array kosong bila lokasi belum diberi menu (pemanggil memakai cadangan).
+     *
+     * @return array<int, array{label: string, url: string, active: bool, children: array<int, array{label: string, url: string, active: bool}>}>
+     */
+    protected function menuTree(string $location): array
+    {
+        static $cache = [];
+
+        if (isset($cache[$location])) {
+            return $cache[$location];
+        }
+
+        $locations = get_nav_menu_locations();
+        $menu = has_nav_menu($location) && ! empty($locations[$location]) ? wp_get_nav_menu_items($locations[$location]) : [];
+        if (! $menu || is_wp_error($menu)) {
+            return $cache[$location] = [];
+        }
+
+        $nodes = [];
+        foreach ($menu as $item) {
+            $url = esc_url((string) $item->url);
+            if ($url === '' || $item->title === '') {
+                continue;
+            }
+            $nodes[(int) $item->ID] = [
+                'parent' => (int) $item->menu_item_parent,
+                'label' => wp_strip_all_tags($item->title),
+                'url' => $url,
+                'active' => $this->menuItemActive($item),
+                'children' => [],
+            ];
+        }
+
+        $tree = [];
+        foreach ($nodes as $id => $node) {
+            $parent = $node['parent'];
+            unset($node['parent']);
+            if ($parent && isset($nodes[$parent])) {
+                // Dua tingkat: cucu ikut ke induk tingkat atas.
+                $top = $parent;
+                while ($nodes[$top]['parent'] && isset($nodes[$nodes[$top]['parent']])) {
+                    $top = $nodes[$top]['parent'];
+                }
+                $nodes[$top]['children'][] = ['label' => $node['label'], 'url' => $node['url'], 'active' => $node['active']];
+            } else {
+                $tree[$id] = $node;
+            }
+        }
+
+        // Salinan anak dari $nodes ke $tree (urutan iterasi sudah mengikuti menu_order).
+        $result = [];
+        foreach ($tree as $id => $node) {
+            $node['children'] = $nodes[$id]['children'];
+            $result[] = $node;
+        }
+
+        return $cache[$location] = $result;
+    }
+
+    /** Apakah item menu menunjuk halaman/kategori yang sedang dibuka? */
+    protected function menuItemActive(object $item): bool
+    {
+        $id = (int) $item->object_id;
+
+        return match ($item->type) {
+            'taxonomy' => (is_category() || is_tag() || is_tax()) && get_queried_object_id() === $id,
+            'post_type' => is_singular() && get_queried_object_id() === $id,
+            default => is_front_page() && untrailingslashit((string) $item->url) === untrailingslashit(home_url('/')),
+        };
     }
 
     /** Permalink halaman terbit berdasarkan slug, atau string kosong bila belum ada. */

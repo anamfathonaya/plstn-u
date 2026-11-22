@@ -2,6 +2,9 @@
 
 Halaman ini menjelaskan cara memasang Plstn-U di instalasi WordPress Anda. Anda membutuhkan akses ke folder `wp-content/` dan terminal dengan Composer serta Node.js (lihat [Persyaratan](persyaratan.md)).
 
+!!! note "Prasyarat"
+    Panduan ini mengasumsikan WordPress sudah terpasang, database sudah siap, dan Anda bisa masuk ke wp-admin. Panduan ini tidak menjelaskan cara memasang WordPress.
+
 ## 1. Salin tema
 
 Repo berisi folder `theme/` (tema) dan `mu-plugins/` (data editorial). Salin `theme/` ke `wp-content/themes/plstn-u`:
@@ -40,29 +43,21 @@ composer install
 
 Perintah ini membuat folder `vendor/`. Tema menolak berjalan bila `vendor/autoload.php` tidak ada.
 
-## 4. Sesuaikan `base` dan `APP_URL`
+## 4. Sesuaikan `base`
 
-`theme/vite.config.js` memiliki dua nilai yang bergantung pada lokasi instalasi:
+`theme/vite.config.js` memiliki nilai `base` yang bergantung pada lokasi instalasi:
 
 ```js
-if (! process.env.APP_URL) {
-  process.env.APP_URL = 'https://palestinaupdate.com';
-}
-
 export default defineConfig({
   base: '/wp-content/themes/plstn-u/public/build/',
   // ...
 })
 ```
 
-- **`base`** harus sama dengan path folder tema Anda. Jika folder bernama `my-theme`, ubah menjadi `/wp-content/themes/my-theme/public/build/`. Jika tidak, aset CSS dan JS tidak termuat.
-- **`APP_URL`** adalah nilai cadangan bila variabel lingkungan tidak diset. Set ke domain Anda sebelum build.
+`base` harus sama dengan path folder tema Anda. Jika folder bernama `my-theme`, ubah menjadi `/wp-content/themes/my-theme/public/build/`, lalu jalankan build ulang (langkah 5).
 
-```bash
-APP_URL=https://domain-anda.example npm run build
-```
-
-Di Windows PowerShell gunakan `$env:APP_URL="https://domain-anda.example"` lalu `npm run build`.
+!!! warning
+    Jika `base` tidak sesuai, CSS dan JS tetap termuat, tetapi font tidak. Browser memakai font cadangan. Nilai `base` juga tertanam di URL font di dalam CSS.
 
 ## 5. Pasang dependensi dan build aset
 
@@ -83,13 +78,16 @@ Folder `node_modules/`, `vendor/`, dan `public/build/` tidak ikut di repo. Anda 
 
 1. Buka **Appearance > Themes** di admin WordPress.
 2. Aktifkan **Plstn-U**.
-3. Buka **Settings > Permalinks** lalu klik **Save Changes**. Langkah ini memperbarui aturan URL untuk CPT `video` dan `infografik`.
+3. Buka **Settings > Permalinks**, pilih **Post name**, lalu klik **Save Changes**.
+
+!!! warning
+    Instalasi baru memakai struktur **Plain**. Dengan struktur ini, `/feed/` dan `/video/` menampilkan beranda. Klik **Save Changes** tanpa mengganti struktur tidak cukup.
 
 Setelah aktif, atur nama situs di **Settings > General**. Nama ini tampil di navbar, footer, dan judul feed.
 
 ## 7. Periksa hasil
 
-- Beranda memuat CSS dan JS tanpa error 404 di konsol browser.
+- Beranda memuat CSS dan JS tanpa error 404 di konsol browser, dan berkas font `.woff2` juga termuat.
 - Halaman artikel menampilkan kolom isi dan tautan terkait.
 - URL `/video/` dan `/infografik/` memuat arsip (setelah ada konten).
 

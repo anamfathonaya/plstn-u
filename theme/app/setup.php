@@ -85,6 +85,7 @@ add_action('after_setup_theme', function () {
      */
     register_nav_menus([
         'primary_navigation' => __('Primary Navigation', 'sage'),
+        'footer_navigation' => __('Footer Navigation', 'sage'),
     ]);
 
     /**
@@ -100,6 +101,15 @@ add_action('after_setup_theme', function () {
      * @link https://developer.wordpress.org/reference/functions/add_theme_support/#title-tag
      */
     add_theme_support('title-tag');
+
+    /**
+     * Logo situs dari Customizer (Identitas Situs). Tanpa logo, tema memakai favicon.svg.
+     */
+    add_theme_support('custom-logo', [
+        'flex-width' => true,
+        'flex-height' => true,
+        'unlink-homepage-logo' => false,
+    ]);
 
     /**
      * Enable post thumbnail support.

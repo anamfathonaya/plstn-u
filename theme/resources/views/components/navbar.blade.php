@@ -18,7 +18,7 @@
 
     <a href="{{ $homeUrl }}" class="absolute left-1/2 flex -translate-x-1/2 items-center gap-2 font-serif text-logo text-primary md:static md:translate-x-0" aria-label="{{ $siteName }}">
       @if ($logo)
-        <img src="{{ $logo }}" alt="" width="28" height="28" class="size-7">
+        <img src="{{ $logo }}" alt="" height="28" class="h-7 w-auto object-contain">
       @endif
       <span class="md:hidden" aria-hidden="true">{{ $shortName }}</span>
       <span class="hidden md:inline" aria-hidden="true">{{ $siteName }}</span>

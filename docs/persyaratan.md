@@ -7,10 +7,19 @@ Halaman ini merangkum versi yang tercantum di kode tema. Angka berikut diambil l
 | Komponen | Versi minimum | Sumber |
 | --- | --- | --- |
 | PHP | 8.3 | `theme/style.css` (`Requires PHP`), `theme/composer.json` (`require.php`) |
-| WordPress | 6.4 | `theme/style.css` (`Requires at least`) |
+| WordPress | Sudah terpasang. Diuji pada 7.1.5 | `theme/style.css` mencantumkan `Requires at least: 6.4`, tetapi versi 6.4 belum diuji |
 | Node.js | `^20.19.0` atau `>=22.12.0` | `theme/package.json` (`engines.node`) |
 | npm | Ikut Node.js | Dipakai untuk `npm ci` dan `npm run build` |
 | Composer | Tidak dibatasi versinya | Dipakai untuk `roots/acorn` |
+
+## WordPress
+
+Plstn-U adalah tema, bukan instalasi WordPress. Pasang WordPress terlebih dahulu, lalu pastikan Anda bisa masuk ke wp-admin.
+
+| Versi | Status |
+| --- | --- |
+| 7.1.5 | Diuji. Instalasi bersih dengan tema dan `mu-plugins/` berjalan tanpa warning PHP. |
+| 6.4 | Tercantum sebagai minimum di `theme/style.css`, belum diuji. |
 
 ## PHP dan WordPress
 

@@ -2,19 +2,75 @@
 
 Halaman ini menjelaskan pengaturan yang bisa Anda ubah tanpa menyentuh kode tema, serta beberapa nilai yang ditetapkan di kode dan perlu diubah bila situs Anda memakai struktur berbeda.
 
+## Customizer Plstn-U
+
+Buka **Appearance > Customize** lalu pilih bagian **Plstn-U**. Pengaturan berikut tersedia:
+
+| Pengaturan | Nama di kode | Default | Keterangan |
+| --- | --- | --- | --- |
+| Liputan live sedang berjalan | `pu_live_active` | Mati | Menampilkan tombol Live di navbar dan drawer, serta badge LIVE di hero beranda. |
+| URL tombol Live (opsional) | `pu_live_url` | Kosong | Tujuan tombol Live. Jika kosong, dipakai halaman Kabar Terkini. |
+| Halaman Kabar Terkini | `pu_news_page` | Kosong | Halaman tujuan tombol Live bila URL Live kosong. |
+| Kategori blok beranda 1 | `pu_home_category_1` | `gaza` | Blok kartu pertama di beranda. |
+| Kategori blok beranda 2 | `pu_home_category_2` | `tepi-barat` | Blok kartu kedua di beranda. |
+| Kategori blok beranda 3 | `pu_home_category_3` | `internasional` | Blok kartu ketiga di beranda. |
+
+Keterangan tambahan:
+
+- **Tombol Live tidak tampil sampai diaktifkan.** Setelah opsi "Liputan live sedang berjalan" dicentang dan disimpan, tombol muncul di navbar, item teratas di drawer, dan badge LIVE di hero beranda.
+- **Urutan tujuan tombol Live:** URL Live (jika diisi), lalu halaman dari "Halaman Kabar Terkini", lalu halaman dengan slug `kabar-terkini`, lalu halaman Posts page (lihat [Halaman Kabar Terkini](#halaman-kabar-terkini)).
+- **Kategori beranda** dipilih dari daftar kategori yang ada. Pilihan "(kosong)" melewati slot tersebut.
+
+!!! note
+    Opsi Live juga bisa diatur lewat WP-CLI: `wp option update pu_live_active 1` (aktif) atau `wp option update pu_live_active 0` (nonaktif).
+
+## Logo dan nama situs
+
+- **Logo.** Unggah logo di **Appearance > Customize > Site Identity > Logo**. Logo ini dipakai di navbar dan drawer. Jika belum diisi, tema memakai tanda logo bawaan (`favicon.svg`).
+- **Nama situs.** Atur di **Settings > General > Site Title**. Nama ini tampil di navbar, drawer, footer, dan judul feed.
+
 ## Menu navigasi
 
-Lokasi menu `primary_navigation` terdaftar (`theme/app/setup.php`), tetapi template tidak memanggil `wp_nav_menu()`. Menu utama dibangun dari **kategori**:
+Tema memiliki dua lokasi menu: **Primary Navigation** (`primary_navigation`) dan **Footer Navigation** (`footer_navigation`). Atur di **Appearance > Menus**, lalu tetapkan menu ke lokasi tersebut.
 
-- `App::navItems()` (`theme/app/View/Composers/App.php`) mengambil kategori induk beserta sub-kategorinya.
-- Kategori yang tidak punya artikel (`hide_empty`) tidak ditampilkan.
-- Kategori default WordPress tidak ditampilkan.
-- Urutan mengikuti nama kategori (A-Z).
+### Menu utama
 
-!!! warning
-    Mengisi menu lewat **Appearance > Menus** tidak mengubah navigasi utama. Atur struktur navigasi lewat kategori: buat kategori induk, lalu kategori anak di bawahnya.
+- **Jika menu ditetapkan ke Primary Navigation**, menu itu dipakai untuk strip kategori di beranda dan drawer navigasi. Tema membaca dua tingkat: item tingkat kedua tampil sebagai sub-item di bawah induknya. Item **Terkini** bawaan tidak ditambahkan otomatis, jadi tambahkan sendiri ke menu bila dibutuhkan.
+- **Jika belum ditetapkan**, tema membangun menu dari kategori: kategori induk beserta sub-kategorinya. Kategori tanpa artikel dan kategori default WordPress tidak ditampilkan. Urutannya mengikuti nama (A-Z).
 
-Strip kategori horizontal di beranda juga memakai daftar kategori yang sama.
+!!! note
+    Item menu tanpa judul dilewati. Item yang menunjuk ke kategori atau halaman yang sedang dibuka ditandai aktif.
+
+### Menu footer
+
+- **Jika menu ditetapkan ke Footer Navigation**, item menu tampil sebagai tautan footer.
+- **Jika belum ditetapkan**, footer menampilkan tautan ke halaman dengan slug `tentang`, `redaksi`, dan `kontak`. Halaman yang belum diterbitkan tidak tampil.
+
+## Halaman Kabar Terkini
+
+Tema memakai halaman posts (Posts page) sebagai indeks berita, yaitu halaman tujuan tautan "Terkini" dan judul daftar artikel.
+
+1. Buat halaman baru, misalnya "Kabar Terkini", lalu terbitkan.
+2. Buka **Settings > Reading**.
+3. Pada kolom **Posts page**, pilih halaman tersebut, lalu simpan.
+
+!!! note
+    Kolom **Posts page** tampil di bawah pilihan **A static page** dan hanya muncul setelah ada minimal satu halaman. Anda tidak harus menjadikan halaman ini beranda. Pada uji instalasi, beranda tetap memakai **Your latest posts** dan tautan Terkini mengarah ke halaman tersebut.
+
+Jika Posts page belum diset, tautan Terkini mengarah ke beranda.
+
+## Halaman dengan slug tetap
+
+Beberapa tautan memakai slug halaman yang ditetapkan di kode. Buat halaman dengan slug berikut bila ingin tautan tampil:
+
+| Slug | Dipakai untuk | Perilaku bila tidak ada |
+| --- | --- | --- |
+| `kabar-terkini` | Tujuan tombol Live (bila "Halaman Kabar Terkini" dan URL Live kosong) | Memakai Posts page |
+| `tentang` | Tautan footer (bila Footer Navigation kosong) | Tautan tidak tampil |
+| `redaksi` | Tautan footer (bila Footer Navigation kosong) | Tautan tidak tampil |
+| `kontak` | Tautan footer (bila Footer Navigation kosong) | Tautan tidak tampil |
+
+Halaman footer hanya tampil bila statusnya terbit (`publish`).
 
 ## Sidebar
 
@@ -27,39 +83,6 @@ Ada dua area widget yang terdaftar di `theme/app/setup.php`:
 
 !!! note
     Jika Anda ingin widget tampil, tambahkan `@section('sidebar')` di template yang Anda pilih, lalu `@include('sections.sidebar')` di dalamnya. Bagian ini belum diuji pada tema ini.
-
-## Halaman posts (berita terkini)
-
-Tema memakai halaman posts untuk tautan "Terkini" dan judul daftar artikel.
-
-1. Buat halaman baru, misalnya "Kabar Terkini".
-2. Buka **Settings > Reading**.
-3. Pada **Posts page**, pilih halaman tersebut.
-
-Jika belum diatur, tautan berita mengarah ke beranda (`theme/app/Support/NewsIndex.php`).
-
-## Halaman dengan slug tetap
-
-Beberapa tautan memakai slug halaman yang ditetapkan di kode. Buat halaman dengan slug berikut bila ingin tautan tampil:
-
-| Slug | Dipakai untuk | Perilaku bila tidak ada |
-| --- | --- | --- |
-| `kabar-terkini` | Tujuan tombol Live | Memakai halaman posts |
-| `tentang` | Tautan footer | Tautan tidak tampil |
-| `redaksi` | Tautan footer | Tautan tidak tampil |
-| `kontak` | Tautan footer | Tautan tidak tampil |
-
-Halaman footer hanya tampil bila statusnya terbit (`publish`).
-
-## Kategori beranda
-
-Beranda menampilkan blok per kategori untuk tiga slug yang ditetapkan sebagai konstanta di `theme/app/View/Composers/FrontPage.php`:
-
-```php
-protected const SECTIONS = ['gaza', 'tepi-barat', 'internasional'];
-```
-
-Ubah nilai ini ke slug kategori Anda. Kategori dengan slug lain tidak muncul sebagai blok di beranda.
 
 ## Custom post type video dan infografik
 
@@ -79,13 +102,15 @@ Template yang dipakai:
 | Satu video | `single-video.blade.php` |
 | Satu infografik | `single-infografik.blade.php` |
 
-Setelah menambah atau mengubah CPT, perbarui aturan permalink:
+Setelah menambah atau mengubah CPT, perbarui aturan permalink dengan menyimpan ulang **Settings > Permalinks**, atau dengan `wp rewrite flush`.
 
-```bash
-wp rewrite flush
+## Kategori beranda (nilai bawaan kode)
+
+Nilai bawaan tiga blok beranda ada di `theme/app/View/Composers/FrontPage.php` (konstanta `SECTIONS`). Nilai ini dipakai bila Customizer belum diisi. Setelah Customizer diisi, nilai di Customizer yang berlaku.
+
+```php
+public const SECTIONS = ['gaza', 'tepi-barat', 'internasional'];
 ```
-
-Alternatifnya, simpan ulang **Settings > Permalinks** di admin WordPress.
 
 ## Plugin opsional: Post Views Counter
 
@@ -95,31 +120,17 @@ Blok **Terpopuler** (`theme/app/View/Composers/Trending.php`) bekerja begini:
 - Jika tidak ada artikel dengan tayangan dalam 7 hari terakhir, blok menampilkan artikel terbaru.
 - Jika plugin tidak dipasang, blok selalu menampilkan artikel terbaru.
 
-## Mode Live
-
-Tombol **Live** di navbar tampil saat opsi WordPress `pu_live_active` bernilai benar. Tema tidak menyediakan layar pengaturan untuk opsi ini, jadi atur lewat WP-CLI:
-
-```bash
-wp option update pu_live_active 1   # tampilkan tombol Live
-wp option update pu_live_active 0   # sembunyikan tombol Live
-```
-
-Tombol mengarah ke halaman `kabar-terkini` jika ada, atau ke halaman posts bila tidak ada. Teks tombol ada di `navbar.blade.php` dan `nav-drawer.blade.php` (lihat [Kustomisasi](kustomisasi.md)).
-
 ## Feed RSS
 
 File `mu-plugins/pu-feeds.php` mengubah feed WordPress sebagai berikut:
 
 - Jumlah item per feed: 20.
-- Bahasa kanal: `id` (ditetapkan di `pu_feeds_bloginfo()`). Ubah bila situs Anda memakai bahasa lain.
+- Bahasa kanal mengikuti bahasa situs di **Pengaturan > Umum > Bahasa Situs**, dengan garis bawah diganti tanda hubung (misalnya `id_ID` menjadi `id-ID`). Jika bahasa situs kosong, dipakai `id`.
 - Setiap item memuat `<enclosure>` dan `<media:content>` untuk gambar utama.
 - Ringkasan diikuti tautan "Baca selengkapnya".
 - Halaman kategori mengiklankan feed kategori di `<head>`.
 
-Alamat feed mengikuti aturan WordPress standar, misalnya `/feed/` dan `/category/<slug>/feed/`.
-
-!!! warning
-    Jika Anda mengganti bahasa kanal, ubah juga nilai di `pu_feeds_bloginfo()` dan bukan hanya pengaturan WordPress.
+Alamat feed mengikuti aturan WordPress standar, misalnya `/feed/` dan `/category/<slug>/feed/`. Jika `/feed/` menampilkan beranda, struktur permalink belum diatur (lihat [Instalasi](instalasi.md#6-aktifkan-tema)).
 
 ## SEO
 

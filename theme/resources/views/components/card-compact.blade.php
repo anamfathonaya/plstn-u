@@ -15,7 +15,7 @@
       @if ($image !== '')
         <img src="{{ esc_url($image) }}" alt="{{ $imageAlt }}" loading="lazy" class="size-full object-cover">
       @else
-        <x-image-placeholder :logo="$logoUrl ?? ''" />
+        <x-image-placeholder :logo="$markUrl ?? ''" />
       @endif
     </a>
   @endif

@@ -22,7 +22,7 @@
         :site-name="$siteName"
         :logo="$logoUrl"
         :home-url="$homeUrl"
-        :live="$liveActive"
+        :live="$liveActive()"
         :live-url="$liveUrl"
         :search-url="$searchUrl"
         :footer-text="$navFooter"

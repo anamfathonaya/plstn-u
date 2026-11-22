@@ -6,7 +6,7 @@
     @if ($image !== '')
       <img src="{{ esc_url($image) }}" alt="{{ $imageAlt }}" fetchpriority="high" class="size-full object-cover">
     @else
-      <x-image-placeholder :logo="$logoUrl ?? ''" />
+      <x-image-placeholder :logo="$markUrl ?? ''" />
     @endif
   </a>
   <div class="flex flex-col gap-3">

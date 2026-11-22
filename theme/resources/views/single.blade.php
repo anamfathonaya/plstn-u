@@ -33,7 +33,7 @@
               @if ($article['image'] !== '')
                 <img src="{{ $article['image'] }}" alt="{{ $article['imageAlt'] }}" fetchpriority="high" class="size-full object-cover">
               @else
-                <x-image-placeholder :logo="$logoUrl ?? ''" />
+                <x-image-placeholder :logo="$markUrl ?? ''" />
               @endif
             </div>
             @if ($article['image'] !== '' && ($article['caption'] !== '' || $article['sourceName'] !== ''))

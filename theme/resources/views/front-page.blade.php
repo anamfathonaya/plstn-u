@@ -18,7 +18,7 @@
             <x-hero-column class="hidden md:order-1 md:flex" :lead="$heroLeft['lead']" :items="$heroLeft['items']" />
           @endif
 
-          <x-hero-headline class="md:order-2 {{ $heroSides === 0 ? 'md:col-span-4' : ($heroSides === 1 ? 'md:col-span-3' : 'md:col-span-2') }}" :title="$hero['title']" :url="$hero['url']" :image="$hero['image']" :image-alt="$hero['imageAlt']" :excerpt="$hero['excerpt']" :live="true" :updated="$hero['updated']" :updates="$hero['updates']" />
+          <x-hero-headline class="md:order-2 {{ $heroSides === 0 ? 'md:col-span-4' : ($heroSides === 1 ? 'md:col-span-3' : 'md:col-span-2') }}" :title="$hero['title']" :url="$hero['url']" :image="$hero['image']" :image-alt="$hero['imageAlt']" :excerpt="$hero['excerpt']" :live="$liveActive()" :updated="$hero['updated']" :updates="$hero['updates']" />
 
           @if ($heroRight['lead']['title'] !== '')
             <x-hero-column class="hidden md:order-3 md:flex" :lead="$heroRight['lead']" :items="$heroRight['items']" />
