@@ -41,6 +41,17 @@ if (! function_exists('pu_feeds_boot')) {
 
         // Iklankan feed kategori di <head>.
         add_action('wp_head', 'pu_feeds_category_link', 1);
+
+        // Iklankan feed utama di <head> lewat feed_links() core (hanya aktif
+        // dengan dukungan ini). Di sini, bukan di tema, agar tetap ada saat tema diganti.
+        add_action('after_setup_theme', 'pu_feeds_theme_support', 20);
+    }
+}
+
+if (! function_exists('pu_feeds_theme_support')) {
+    function pu_feeds_theme_support(): void
+    {
+        add_theme_support('automatic-feed-links');
     }
 }
 

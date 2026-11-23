@@ -67,6 +67,21 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
         }
     }
 
+    // (d) Kanal & media sosial di footer. Kosong = tombol disembunyikan.
+    foreach (\App\View\Composers\App::FOOTER_CHANNELS as $id => $label) {
+        $wp_customize->add_setting('pu_'.$id, [
+            'default' => '',
+            'sanitize_callback' => 'esc_url_raw',
+        ]);
+        $wp_customize->add_control('pu_'.$id, [
+            'section' => 'pu_theme',
+            /* translators: %s: nama kanal, mis. Instagram */
+            'label' => sprintf(__('URL %s', 'sage'), $label),
+            'description' => __('Kosongkan untuk menyembunyikan tombol di footer.', 'sage'),
+            'type' => 'url',
+        ]);
+    }
+
     foreach (\App\View\Composers\FrontPage::SECTIONS as $i => $default) {
         $id = 'pu_home_category_'.($i + 1);
         $wp_customize->add_setting($id, [

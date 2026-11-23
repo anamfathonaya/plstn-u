@@ -2,6 +2,7 @@
 
 namespace App\View\Composers;
 
+use App\Support\PostCard;
 use Roots\Acorn\View\Composer;
 
 class Trending extends Composer
@@ -54,7 +55,7 @@ class Trending extends Composer
         }
 
         return array_map(fn ($post) => [
-            'title' => html_entity_decode(get_the_title($post), ENT_QUOTES, 'UTF-8'),
+            'title' => PostCard::title($post),
             'url' => esc_url(get_permalink($post)),
         ], $posts);
     }

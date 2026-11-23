@@ -2,6 +2,7 @@
 
 namespace App\View\Composers;
 
+use App\Support\PostCard;
 use Roots\Acorn\View\Composer;
 use WP_Post;
 
@@ -76,24 +77,7 @@ class Archive extends Composer
     /** @return array{title: string, url: string, image: string, imageAlt: string, kicker: string, time: string} */
     protected function item(WP_Post $post): array
     {
-        $default = (int) get_option('default_category');
-        $kicker = '';
-        foreach (get_the_category($post->ID) as $term) {
-            if ($term->term_id !== $default) {
-                $kicker = $term->name;
-                break;
-            }
-        }
-        $image = get_the_post_thumbnail_url($post, 'medium_large');
-
-        return [
-            'title' => html_entity_decode(get_the_title($post), ENT_QUOTES, 'UTF-8'),
-            'url' => esc_url(get_permalink($post)),
-            'image' => $image ? esc_url($image) : '',
-            'imageAlt' => '',
-            'kicker' => $kicker,
-            'time' => get_the_date('j F Y', $post),
-        ];
+        return PostCard::make($post, 'medium_large', get_the_date('j F Y', $post)) + ['kicker' => PostCard::kicker($post)];
     }
 
     /**

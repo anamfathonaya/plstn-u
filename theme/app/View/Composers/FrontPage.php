@@ -3,6 +3,7 @@
 namespace App\View\Composers;
 
 use App\Support\NewsIndex;
+use App\Support\PostCard;
 use Roots\Acorn\View\Composer;
 use WP_Post;
 use WP_Query;
@@ -225,62 +226,30 @@ class FrontPage extends Composer
         }
         $this->used[] = $post->ID;
 
-        return [
-            'title' => $this->title($post),
-            'url' => esc_url(get_permalink($post)),
-            'image' => $this->image($post, 'large'),
-            'imageAlt' => '',
-            'kicker' => $this->kicker($post),
-            'time' => $this->when($post),
-        ];
+        return PostCard::make($post, 'large', $this->when($post)) + ['kicker' => PostCard::kicker($post)];
     }
 
     /** @param array<int, WP_Post> $updates */
     protected function hero(WP_Post $post, array $updates): array
     {
         return [
-            'title' => $this->title($post),
+            'title' => PostCard::title($post),
             'url' => esc_url(get_permalink($post)),
-            'image' => $this->image($post, 'full'),
+            'image' => PostCard::image($post, 'full'),
             'imageAlt' => '',
             'excerpt' => wp_trim_words(wp_strip_all_tags(get_the_excerpt($post)), 30),
             'updated' => $this->when($post),
             'updates' => array_map(fn ($u) => [
                 'time' => $this->ago($u, false),
-                'title' => $this->title($u),
+                'title' => PostCard::title($u),
                 'url' => esc_url(get_permalink($u)),
             ], $updates),
         ];
     }
 
-    /** Judul tanpa entitas HTML (Blade meng-escape sendiri; hindari escape ganda). */
-    protected function title(WP_Post $post): string
-    {
-        return html_entity_decode(get_the_title($post), ENT_QUOTES, 'UTF-8');
-    }
-
     protected function emptyHero(): array
     {
         return ['title' => '', 'url' => '', 'image' => '', 'imageAlt' => '', 'excerpt' => '', 'updated' => '', 'updates' => []];
-    }
-
-    protected function image(WP_Post $post, string $size): string
-    {
-        $url = get_the_post_thumbnail_url($post, $size);
-
-        return $url ? esc_url($url) : '';
-    }
-
-    /** Nama kategori utama (abaikan "Uncategorized"). */
-    protected function kicker(WP_Post $post): string
-    {
-        foreach (get_the_category($post->ID) as $term) {
-            if ($term->term_id !== (int) get_option('default_category')) {
-                return $term->name;
-            }
-        }
-
-        return '';
     }
 
     /** Waktu relatif ("2 jam lalu") untuk kiriman < 7 hari, selain itu tanggal. */

@@ -94,7 +94,8 @@ Teks berikut ada di Blade atau composer, bukan dari pengaturan WordPress:
 | "Live Update" dan "Live" | `components/navbar.blade.php`, `components/nav-drawer.blade.php` (`liveLabel`) |
 | "Terkini", "Utama", "Terbaru" | `App.php` (`categoryStrip()`, `quickTabs()`) |
 | "Kabar Terbaru" | `FrontPage.php` |
-| "Tentang", "Redaksi", "Kontak" | `App.php` (`footerLinks()`) |
+| "Tentang", "Redaksi", "Kontak" | `App.php` (`footerColumns()`) |
+| "Ikuti di", "Ke atas" | `components/footer.blade.php` |
 | "Terpopuler", "Topik populer", "Lihat semua" | komponen `trending-list`, `search-modal`, `section-header` |
 | "Cari berita…" | `components/search-field.blade.php`, `components/search-modal.blade.php` |
 

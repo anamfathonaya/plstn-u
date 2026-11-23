@@ -14,6 +14,10 @@ Buka **Appearance > Customize** lalu pilih bagian **Plstn-U**. Pengaturan beriku
 | Kategori blok beranda 1 | `pu_home_category_1` | `gaza` | Blok kartu pertama di beranda. |
 | Kategori blok beranda 2 | `pu_home_category_2` | `tepi-barat` | Blok kartu kedua di beranda. |
 | Kategori blok beranda 3 | `pu_home_category_3` | `internasional` | Blok kartu ketiga di beranda. |
+| URL Google News, WhatsApp Channel, Telegram | `pu_googlenews`, `pu_whatsapp`, `pu_telegram` | Kosong | Tombol "Ikuti di" di footer. Kosong = tombol disembunyikan. |
+| URL Instagram, YouTube, X, TikTok, Facebook | `pu_instagram`, `pu_youtube`, `pu_x`, `pu_tiktok`, `pu_facebook` | Kosong | Baris media sosial footer. Kosong = disembunyikan. Tautan RSS (`/feed/`) selalu tampil. |
+
+Lembar isian dan cara mendapatkan URL tiap kanal (termasuk Google News): [Kanal & media sosial](kanal-sosial.md).
 
 Keterangan tambahan:
 
@@ -43,8 +47,9 @@ Tema memiliki dua lokasi menu: **Primary Navigation** (`primary_navigation`) dan
 
 ### Menu footer
 
-- **Jika menu ditetapkan ke Footer Navigation**, item menu tampil sebagai tautan footer.
-- **Jika belum ditetapkan**, footer menampilkan tautan ke halaman dengan slug `tentang`, `redaksi`, dan `kontak`. Halaman yang belum diterbitkan tidak tampil.
+- **Jika menu ditetapkan ke Footer Navigation**, menu menjadi kolom tautan footer. Item tingkat atas yang punya sub-item menjadi judul kolom, dan sub-itemnya menjadi tautan kolom tersebut (contoh: "Palestina Update" berisi Tentang Kami, Redaksi, Kontak; "Kebijakan" berisi Pedoman Media Siber, Kebijakan Privasi). Item tingkat atas tanpa sub-item dikumpulkan dalam satu kolom tanpa judul.
+- **Jika belum ditetapkan**, footer menampilkan satu kolom tautan ke halaman dengan slug `tentang`, `redaksi`, dan `kontak`. Halaman yang belum diterbitkan tidak tampil.
+- **Slogan** di bawah nama situs di footer diambil dari **Settings > General > Tagline**.
 
 ## Halaman Kabar Terkini
 

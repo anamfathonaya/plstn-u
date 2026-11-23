@@ -49,6 +49,28 @@ html[data-text-size="large"] .article-body {
   line-height: var(--text-lead--line-height);
   font-weight: var(--text-lead--font-weight);
 }
+/* Tabel (blok Table / Markdown): garis rambut, rata atas, sans padat; tabel lebar digulir di dalam wadahnya */
+.article-body .wp-block-table {
+  overflow-x: auto;
+}
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--text-excerpt);
+  line-height: var(--text-excerpt--line-height);
+}
+.article-body th,
+.article-body td {
+  text-align: start;
+  vertical-align: top;
+  padding: var(--spacing-2) var(--spacing-3) var(--spacing-2) 0;
+  border-bottom: 1px solid var(--color-subtle);
+}
+.article-body th {
+  font-weight: 700;
+  border-bottom-color: var(--color-strong);
+}
 .article-body img,
 .article-body video,
 .article-body iframe {

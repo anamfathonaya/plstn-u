@@ -3,6 +3,7 @@
 namespace App\View\Composers;
 
 use App\Support\NewsIndex;
+use App\Support\PostCard;
 use Roots\Acorn\View\Composer;
 use WP_Post;
 use WP_Query;
@@ -49,7 +50,7 @@ class Single extends Composer
         ], get_the_tags($post->ID) ?: []);
 
         return [
-            'title' => html_entity_decode(get_the_title($post), ENT_QUOTES, 'UTF-8'),
+            'title' => PostCard::title($post),
             'kicker' => $categories[0]['name'] ?? '',
             'kickerUrl' => $categories[0]['url'] ?? '',
             'author' => $author !== '' ? $author : get_the_author_meta('display_name', (int) $post->post_author),
@@ -70,12 +71,7 @@ class Single extends Composer
     /** Kategori kiriman tanpa kategori bawaan ("Uncategorized"). */
     protected function categories(WP_Post $post): array
     {
-        $default = (int) get_option('default_category');
-
-        return array_values(array_filter(
-            get_the_category($post->ID),
-            fn ($t) => $t->term_id !== $default
-        ));
+        return PostCard::categories($post);
     }
 
     /** Tautan "Lihat semua" Berita Terkait: arsip kategori utama. */
@@ -102,13 +98,7 @@ class Single extends Composer
             'no_found_rows' => true,
         ]);
 
-        return array_map(fn (WP_Post $p) => [
-            'title' => html_entity_decode(get_the_title($p), ENT_QUOTES, 'UTF-8'),
-            'url' => esc_url(get_permalink($p)),
-            'image' => ($u = get_the_post_thumbnail_url($p, 'medium')) ? esc_url($u) : '',
-            'imageAlt' => '',
-            'time' => get_the_date('j F Y', $p),
-        ], $posts);
+        return array_map(fn (WP_Post $p) => PostCard::make($p, 'medium', get_the_date('j F Y', $p)), $posts);
     }
 
     /** @return array<int, WP_Post> */
@@ -146,13 +136,9 @@ class Single extends Composer
             $posts = array_merge($posts, $this->run([...$args, 'posts_per_page' => 3 - count($posts), 'post__not_in' => $exclude]));
         }
 
-        return array_map(fn (WP_Post $p) => [
-            'title' => html_entity_decode(get_the_title($p), ENT_QUOTES, 'UTF-8'),
-            'url' => esc_url(get_permalink($p)),
-            'image' => ($u = get_the_post_thumbnail_url($p, 'medium_large')) ? esc_url($u) : '',
-            'imageAlt' => '',
-            'kicker' => $this->categories($p)[0]->name ?? '',
-            'time' => get_the_date('j F Y', $p),
-        ], $posts);
+        return array_map(
+            fn (WP_Post $p) => PostCard::make($p, 'medium_large', get_the_date('j F Y', $p)) + ['kicker' => PostCard::kicker($p)],
+            $posts
+        );
     }
 }

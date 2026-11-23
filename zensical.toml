@@ -11,6 +11,7 @@ nav = [
   { "Persyaratan" = "persyaratan.md" },
   { "Instalasi" = "instalasi.md" },
   { "Konfigurasi" = "konfigurasi.md" },
+  { "Kanal & media sosial" = "kanal-sosial.md" },
   { "Kustomisasi" = "kustomisasi.md" },
   { "Arsitektur" = "arsitektur.md" },
 ]

@@ -43,7 +43,7 @@ Composer berada di `theme/app/View/Composers/`. Setiap composer mendaftarkan vie
 | `NotFound` | `NotFound.php` | `404` |
 | `Trending` | `Trending.php` | `components.trending-list` |
 
-`App` adalah composer global. Method publiknya (mis. `navItems()`, `categoryStrip()`, `quickTabs()`, `footerLinks()`, `liveActive()`) dipanggil dari Blade sebagai fungsi, misalnya `$navItems()`.
+`App` adalah composer global. Method publiknya (mis. `navItems()`, `categoryStrip()`, `quickTabs()`, `footerColumns()`, `liveActive()`) dipanggil dari Blade sebagai fungsi, misalnya `$navItems()`.
 
 Helper pendukung:
 

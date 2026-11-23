@@ -38,7 +38,14 @@
         </aside>
       @endif
 
-      <x-footer :site-name="$siteName" :copyright="$copyright" :items="$footerLinks()" />
+      <x-footer
+        :site-name="$siteName"
+        :tagline="$siteTagline"
+        :copyright="$copyright"
+        :follow="$followLinks()"
+        :social="$socialLinks()"
+        :columns="$footerColumns()"
+      />
     </div>
 
     @php(do_action('get_footer'))

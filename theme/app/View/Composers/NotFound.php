@@ -3,6 +3,7 @@
 namespace App\View\Composers;
 
 use App\Support\NewsIndex;
+use App\Support\PostCard;
 use Roots\Acorn\View\Composer;
 use WP_Post;
 use WP_Query;
@@ -29,14 +30,10 @@ class NotFound extends Composer
         update_post_thumbnail_cache($query);
 
         return [
-            'latest' => array_map(fn (WP_Post $p) => [
-                'title' => html_entity_decode(get_the_title($p), ENT_QUOTES, 'UTF-8'),
-                'url' => esc_url(get_permalink($p)),
-                'image' => ($u = get_the_post_thumbnail_url($p, 'medium_large')) ? esc_url($u) : '',
-                'imageAlt' => '',
-                'kicker' => '',
-                'time' => get_the_date('j F Y', $p),
-            ], $query->posts),
+            'latest' => array_map(
+                fn (WP_Post $p) => PostCard::make($p, 'medium_large', get_the_date('j F Y', $p)) + ['kicker' => ''],
+                $query->posts
+            ),
             'latestUrl' => NewsIndex::url(),
         ];
     }

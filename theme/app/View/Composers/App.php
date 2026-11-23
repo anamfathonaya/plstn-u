@@ -17,6 +17,25 @@ class App extends Composer
         '*',
     ];
 
+    /** Kanal "Ikuti di" footer (kunci = ikon + theme_mod `pu_<kunci>`). */
+    public const FOLLOW_CHANNELS = [
+        'googlenews' => 'Google News',
+        'whatsapp' => 'WhatsApp Channel',
+        'telegram' => 'Telegram',
+    ];
+
+    /** Akun media sosial footer (kunci = ikon + theme_mod `pu_<kunci>`). */
+    public const SOCIAL_CHANNELS = [
+        'instagram' => 'Instagram',
+        'youtube' => 'YouTube',
+        'x' => 'X',
+        'tiktok' => 'TikTok',
+        'facebook' => 'Facebook',
+    ];
+
+    /** Semua URL kanal yang diatur di Customizer. */
+    public const FOOTER_CHANNELS = [...self::FOLLOW_CHANNELS, ...self::SOCIAL_CHANNELS];
+
     /**
      * Retrieve the site name.
      */
@@ -56,7 +75,7 @@ class App extends Composer
     /** Tujuan tombol Live (kabar terkini). */
     public function liveUrl(): string
     {
-        $custom = esc_url((string) get_theme_mod('pu_live_url', ''));
+        $custom = esc_url_raw((string) get_theme_mod('pu_live_url', ''));
         if ($custom !== '') {
             return $custom;
         }
@@ -72,7 +91,7 @@ class App extends Composer
     /** Tujuan pencarian. */
     public function searchUrl(): string
     {
-        return esc_url(home_url('/'));
+        return $this->homeUrl();
     }
 
     /**
@@ -152,7 +171,7 @@ class App extends Composer
 
         $items = [[
             'label' => __('Terkini', 'sage'),
-            'url' => esc_url(home_url('/')),
+            'url' => $this->homeUrl(),
             'active' => is_front_page(),
         ]];
 
@@ -203,18 +222,33 @@ class App extends Composer
     /** Teks kaki NavDrawer. */
     public function navFooter(): string
     {
-        return sprintf('© %s %s', wp_date('Y'), get_bloginfo('name', 'display'));
+        return $this->copyright();
     }
 
     /**
-     * Tautan footer.
+     * Kolom tautan footer dari menu `footer_navigation`: item tingkat atas yang
+     * punya sub-item = judul kolom + tautannya; item tingkat atas tanpa sub-item
+     * dikumpulkan jadi satu kolom tanpa judul (di depan). Tanpa menu: halaman
+     * tentang/redaksi/kontak yang terbit.
      *
-     * @return array<int, array{label: string, url: string}>
+     * @return array<int, array{heading: string, links: array<int, array{label: string, url: string}>}>
      */
-    public function footerLinks(): array
+    public function footerColumns(): array
     {
+        $link = fn ($item) => ['label' => $item['label'], 'url' => $item['url']];
+
         if ($menu = $this->menuTree('footer_navigation')) {
-            return array_map(fn ($item) => ['label' => $item['label'], 'url' => $item['url']], $menu);
+            $loose = [];
+            $columns = [];
+            foreach ($menu as $item) {
+                if ($item['children']) {
+                    $columns[] = ['heading' => $item['label'], 'links' => array_map($link, $item['children'])];
+                } else {
+                    $loose[] = $link($item);
+                }
+            }
+
+            return $loose ? [['heading' => '', 'links' => $loose], ...$columns] : $columns;
         }
 
         $links = [];
@@ -222,6 +256,49 @@ class App extends Composer
             // Hanya halaman yang benar-benar ada (situs baru belum punya halaman ini).
             if ($url = $this->pageUrl($slug)) {
                 $links[] = ['label' => $label, 'url' => $url];
+            }
+        }
+
+        return $links ? [['heading' => '', 'links' => $links]] : [];
+    }
+
+    /** Slogan situs (Settings > General > Tagline). */
+    public function siteTagline(): string
+    {
+        return get_bloginfo('description', 'display');
+    }
+
+    /**
+     * Tombol "Ikuti di" footer; hanya kanal yang URL-nya diisi di Customizer.
+     *
+     * @return array<int, array{key: string, label: string, url: string}>
+     */
+    public function followLinks(): array
+    {
+        return $this->channelLinks(self::FOLLOW_CHANNELS);
+    }
+
+    /**
+     * Media sosial footer (yang diisi di Customizer) + feed RSS (selalu ada).
+     *
+     * @return array<int, array{key: string, label: string, url: string}>
+     */
+    public function socialLinks(): array
+    {
+        $links = $this->channelLinks(self::SOCIAL_CHANNELS);
+        $links[] = ['key' => 'rss', 'label' => 'RSS', 'url' => esc_url(get_feed_link())];
+
+        return $links;
+    }
+
+    /** @return array<int, array{key: string, label: string, url: string}> */
+    protected function channelLinks(array $channels): array
+    {
+        $links = [];
+        foreach ($channels as $key => $label) {
+            $url = esc_url_raw((string) get_theme_mod('pu_'.$key, ''));
+            if ($url !== '') {
+                $links[] = ['key' => $key, 'label' => $label, 'url' => $url];
             }
         }
 
@@ -250,13 +327,14 @@ class App extends Composer
 
         $nodes = [];
         foreach ($menu as $item) {
-            $url = esc_url((string) $item->url);
+            $url = esc_url_raw((string) $item->url);
             if ($url === '' || $item->title === '') {
                 continue;
             }
             $nodes[(int) $item->ID] = [
                 'parent' => (int) $item->menu_item_parent,
-                'label' => wp_strip_all_tags($item->title),
+                // Judul tersimpan sebagai entity (mis. "&#038;"); decode agar tidak ter-escape ganda oleh Blade.
+                'label' => html_entity_decode(wp_strip_all_tags($item->title), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
                 'url' => $url,
                 'active' => $this->menuItemActive($item),
                 'children' => [],
