@@ -17,7 +17,7 @@
             <a href="{{ $item['url'] }}" class="group flex items-center gap-3">
               <x-social-icon :name="$item['key']" class="size-7" />
               <span class="flex flex-col">
-                <span class="font-sans text-meta">{{ __('Ikuti di', 'sage') }}</span>
+                <span class="font-sans text-meta">{{ __('Ikuti di', 'plstn-u') }}</span>
                 <span class="font-sans text-section-title group-hover:underline">{{ $item['label'] }}</span>
               </span>
             </a>
@@ -67,7 +67,7 @@
 
     <div class="flex items-center justify-between gap-4 font-sans text-meta">
       <p>{{ $copyright }}</p>
-      <a href="#app" class="hover:underline">{{ __('Ke atas', 'sage') }} <span aria-hidden="true">↑</span></a>
+      <a href="#app" class="hover:underline">{{ __('Ke atas', 'plstn-u') }} <span aria-hidden="true">↑</span></a>
     </div>
   </div>
 </footer>

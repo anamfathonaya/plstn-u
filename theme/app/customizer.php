@@ -17,7 +17,7 @@ function sanitize_category_slug($value): string
 
 add_action('customize_register', function (\WP_Customize_Manager $wp_customize) {
     $wp_customize->add_section('pu_theme', [
-        'title' => __('Plstn-U', 'sage'),
+        'title' => __('Plstn-U', 'plstn-u'),
         'priority' => 30,
     ]);
 
@@ -30,8 +30,8 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
     ]);
     $wp_customize->add_control('pu_live_active', [
         'section' => 'pu_theme',
-        'label' => __('Liputan live sedang berjalan', 'sage'),
-        'description' => __('Menampilkan tombol Live di navbar.', 'sage'),
+        'label' => __('Liputan live sedang berjalan', 'plstn-u'),
+        'description' => __('Menampilkan tombol Live di navbar.', 'plstn-u'),
         'type' => 'checkbox',
     ]);
 
@@ -41,8 +41,8 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
     ]);
     $wp_customize->add_control('pu_live_url', [
         'section' => 'pu_theme',
-        'label' => __('URL tombol Live (opsional)', 'sage'),
-        'description' => __('Kosongkan untuk memakai halaman Kabar Terkini.', 'sage'),
+        'label' => __('URL tombol Live (opsional)', 'plstn-u'),
+        'description' => __('Kosongkan untuk memakai halaman Kabar Terkini.', 'plstn-u'),
         'type' => 'url',
     ]);
 
@@ -53,13 +53,13 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
     ]);
     $wp_customize->add_control('pu_news_page', [
         'section' => 'pu_theme',
-        'label' => __('Halaman Kabar Terkini', 'sage'),
+        'label' => __('Halaman Kabar Terkini', 'plstn-u'),
         'type' => 'dropdown-pages',
         'allow_addition' => false,
     ]);
 
     // (c) Kategori blok beranda (urutan = urutan tampil).
-    $choices = ['' => __('(kosong)', 'sage')];
+    $choices = ['' => __('(kosong)', 'plstn-u')];
     $terms = get_terms(['taxonomy' => 'category', 'hide_empty' => false]);
     if (! is_wp_error($terms)) {
         foreach ($terms as $term) {
@@ -76,8 +76,8 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
         $wp_customize->add_control('pu_'.$id, [
             'section' => 'pu_theme',
             /* translators: %s: nama kanal, mis. Instagram */
-            'label' => sprintf(__('URL %s', 'sage'), $label),
-            'description' => __('Kosongkan untuk menyembunyikan tombol di footer.', 'sage'),
+            'label' => sprintf(__('URL %s', 'plstn-u'), $label),
+            'description' => __('Kosongkan untuk menyembunyikan tombol di footer.', 'plstn-u'),
             'type' => 'url',
         ]);
     }
@@ -91,7 +91,7 @@ add_action('customize_register', function (\WP_Customize_Manager $wp_customize) 
         $wp_customize->add_control($id, [
             'section' => 'pu_theme',
             /* translators: %d: nomor blok */
-            'label' => sprintf(__('Kategori blok beranda %d', 'sage'), $i + 1),
+            'label' => sprintf(__('Kategori blok beranda %d', 'plstn-u'), $i + 1),
             'type' => 'select',
             'choices' => $choices,
         ]);

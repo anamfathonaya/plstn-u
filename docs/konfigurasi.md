@@ -11,9 +11,9 @@ Buka **Appearance > Customize** lalu pilih bagian **Plstn-U**. Pengaturan beriku
 | Liputan live sedang berjalan | `pu_live_active` | Mati | Menampilkan tombol Live di navbar dan drawer, serta badge LIVE di hero beranda. |
 | URL tombol Live (opsional) | `pu_live_url` | Kosong | Tujuan tombol Live. Jika kosong, dipakai halaman Kabar Terkini. |
 | Halaman Kabar Terkini | `pu_news_page` | Kosong | Halaman tujuan tombol Live bila URL Live kosong. |
-| Kategori blok beranda 1 | `pu_home_category_1` | `gaza` | Blok kartu pertama di beranda. |
-| Kategori blok beranda 2 | `pu_home_category_2` | `tepi-barat` | Blok kartu kedua di beranda. |
-| Kategori blok beranda 3 | `pu_home_category_3` | `internasional` | Blok kartu ketiga di beranda. |
+| Kategori blok beranda 1 | `pu_home_category_1` | (kosong) | Blok kartu pertama di beranda. |
+| Kategori blok beranda 2 | `pu_home_category_2` | (kosong) | Blok kartu kedua di beranda. |
+| Kategori blok beranda 3 | `pu_home_category_3` | (kosong) | Blok kartu ketiga di beranda. |
 | URL Google News, WhatsApp Channel, Telegram | `pu_googlenews`, `pu_whatsapp`, `pu_telegram` | Kosong | Tombol "Ikuti di" di footer. Kosong = tombol disembunyikan. |
 | URL Instagram, YouTube, X, TikTok, Facebook | `pu_instagram`, `pu_youtube`, `pu_x`, `pu_tiktok`, `pu_facebook` | Kosong | Baris media sosial footer. Kosong = disembunyikan. Tautan RSS (`/feed/`) selalu tampil. |
 

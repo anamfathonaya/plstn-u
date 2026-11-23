@@ -40,7 +40,7 @@
               <figcaption class="font-sans text-meta text-muted">
                 {{ $article['caption'] }}
                 @if ($article['sourceName'] !== '')
-                  {{ __('Foto/Sumber:', 'sage') }} {{ $article['sourceName'] }}
+                  {{ __('Foto/Sumber:', 'plstn-u') }} {{ $article['sourceName'] }}
                 @endif
               </figcaption>
             @endif
@@ -52,7 +52,7 @@
 
           @if ($article['sourceName'] !== '' || $article['sourceUrl'] !== '')
             <p class="border-t border-subtle pt-4 font-sans text-nav text-muted">
-              {{ __('Sumber:', 'sage') }}
+              {{ __('Sumber:', 'plstn-u') }}
               @if ($article['sourceUrl'] !== '')
                 <a href="{{ $article['sourceUrl'] }}" rel="noopener nofollow" target="_blank" class="text-primary underline">{{ $article['sourceName'] !== '' ? $article['sourceName'] : $article['sourceUrl'] }}</a>
               @else
@@ -62,7 +62,7 @@
           @endif
 
           @if ($article['categories'] || $article['tags'])
-            <ul class="flex flex-wrap gap-2" aria-label="{{ __('Kategori dan tag', 'sage') }}">
+            <ul class="flex flex-wrap gap-2" aria-label="{{ __('Kategori dan tag', 'plstn-u') }}">
               @foreach ($article['categories'] as $term)
                 <li><a href="{{ $term['url'] }}" class="block rounded-full border border-strong px-3 py-1 font-sans text-nav text-primary hover:bg-surface">{{ $term['name'] }}</a></li>
               @endforeach
@@ -73,8 +73,8 @@
           @endif
 
           @if ($related)
-            <section class="flex flex-col gap-4 md:hidden" aria-label="{{ __('Berita Terkait', 'sage') }}">
-              <x-section-header :title="__('Berita Terkait', 'sage')" :url="$relatedUrl" />
+            <section class="flex flex-col gap-4 md:hidden" aria-label="{{ __('Berita Terkait', 'plstn-u') }}">
+              <x-section-header :title="__('Berita Terkait', 'plstn-u')" :url="$relatedUrl" />
               <div class="flex flex-col divide-y divide-subtle">
                 @foreach ($related as $item)
                   <x-card-compact :title="$item['title']" :url="$item['url']" :image="$item['image']" :image-alt="$item['imageAlt']" :time="$item['time']" :thumb="true" />
@@ -84,12 +84,12 @@
           @endif
         </article>
 
-        <aside class="flex w-full flex-col gap-8 md:w-86" aria-label="{{ __('Sorotan', 'sage') }}">
+        <aside class="flex w-full flex-col gap-8 md:w-86" aria-label="{{ __('Sorotan', 'plstn-u') }}">
           <x-trending-list />
 
           @if ($latest)
             <section class="hidden flex-col gap-4 md:flex">
-              <x-section-header :title="__('Kabar Terbaru', 'sage')" :url="$latestUrl" :link-label="__('Semua', 'sage')" />
+              <x-section-header :title="__('Kabar Terbaru', 'plstn-u')" :url="$latestUrl" :link-label="__('Semua', 'plstn-u')" />
               <div class="flex flex-col divide-y divide-subtle">
                 @foreach ($latest as $item)
                   <x-card-compact :title="$item['title']" :url="$item['url']" :time="$item['time']" :thumb="false" />
@@ -101,8 +101,8 @@
       </div>
 
       @if ($related)
-        <section class="hidden flex-col gap-4 md:flex" aria-label="{{ __('Berita Terkait', 'sage') }}">
-          <x-section-header :title="__('Berita Terkait', 'sage')" :url="$relatedUrl" />
+        <section class="hidden flex-col gap-4 md:flex" aria-label="{{ __('Berita Terkait', 'plstn-u') }}">
+          <x-section-header :title="__('Berita Terkait', 'plstn-u')" :url="$relatedUrl" />
           <div class="grid gap-8 md:grid-cols-3">
             @foreach ($related as $item)
               <x-card-standard :title="$item['title']" :url="$item['url']" :image="$item['image']" :image-alt="$item['imageAlt']" :kicker="$item['kicker']" :time="$item['time']" />

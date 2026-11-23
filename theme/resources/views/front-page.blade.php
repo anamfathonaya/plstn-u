@@ -6,14 +6,14 @@
 
   <div class="mx-auto flex max-w-page flex-col gap-12 px-4 py-6 md:px-0 md:py-8">
     @unless ($hasPosts)
-      <p class="py-16 text-center font-serif text-hero-mobile text-muted">{{ __('Belum ada berita.', 'sage') }}</p>
+      <p class="py-16 text-center font-serif text-hero-mobile text-muted">{{ __('Belum ada berita.', 'plstn-u') }}</p>
     @endunless
     @if ($hasPosts)
     {{-- Tab Utama / Terbaru di atas hero --}}
     <x-quick-tabs>
       <x-slot:utama>
         {{-- Hero: 3 kolom desktop (kiri / hero / kanan), hero lebih dulu di mobile --}}
-        <section class="grid gap-8 md:grid-cols-4" aria-label="{{ __('Berita utama', 'sage') }}">
+        <section class="grid gap-8 md:grid-cols-4" aria-label="{{ __('Berita utama', 'plstn-u') }}">
           @if ($heroLeft['lead']['title'] !== '')
             <x-hero-column class="hidden md:order-1 md:flex" :lead="$heroLeft['lead']" :items="$heroLeft['items']" />
           @endif

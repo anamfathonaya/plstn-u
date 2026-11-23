@@ -1,3 +1,4 @@
+Copyright (c) Palestina Update
 Copyright (c) Roots Software LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of

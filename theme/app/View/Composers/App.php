@@ -170,7 +170,7 @@ class App extends Composer
         }
 
         $items = [[
-            'label' => __('Terkini', 'sage'),
+            'label' => __('Terkini', 'plstn-u'),
             'url' => $this->homeUrl(),
             'active' => is_front_page(),
         ]];
@@ -198,8 +198,8 @@ class App extends Composer
     public function quickTabs(): array
     {
         return [
-            'utama' => __('Utama', 'sage'),
-            'terbaru' => __('Terbaru', 'sage'),
+            'utama' => __('Utama', 'plstn-u'),
+            'terbaru' => __('Terbaru', 'plstn-u'),
         ];
     }
 
@@ -252,7 +252,7 @@ class App extends Composer
         }
 
         $links = [];
-        foreach (['tentang' => __('Tentang', 'sage'), 'redaksi' => __('Redaksi', 'sage'), 'kontak' => __('Kontak', 'sage')] as $slug => $label) {
+        foreach (['tentang' => __('Tentang', 'plstn-u'), 'redaksi' => __('Redaksi', 'plstn-u'), 'kontak' => __('Kontak', 'plstn-u')] as $slug => $label) {
             // Hanya halaman yang benar-benar ada (situs baru belum punya halaman ini).
             if ($url = $this->pageUrl($slug)) {
                 $links[] = ['label' => $label, 'url' => $url];

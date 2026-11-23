@@ -7,7 +7,7 @@
 <dialog
   id="search-modal"
   closedby="any"
-  aria-label="{{ __('Cari berita', 'sage') }}"
+  aria-label="{{ __('Cari berita', 'plstn-u') }}"
   x-data
   x-on:open-search-modal.window="$el.showModal()"
   {{ $attributes->class('mx-auto mt-16 mb-auto w-160 max-w-full border border-subtle bg-canvas p-6 text-primary') }}
@@ -21,7 +21,7 @@
         autofocus
         autocomplete="off"
         placeholder="{{ $placeholder }}"
-        aria-label="{{ __('Cari berita', 'sage') }}"
+        aria-label="{{ __('Cari berita', 'plstn-u') }}"
         class="min-w-0 flex-1 bg-transparent font-sans text-excerpt text-primary placeholder:text-muted focus:outline-none"
       >
       <kbd class="hidden border border-subtle px-2 py-0.5 font-sans text-meta text-muted md:block" aria-hidden="true">Esc</kbd>

@@ -71,6 +71,8 @@ add_filter('should_load_separate_core_block_assets', '__return_false');
  * @return void
  */
 add_action('after_setup_theme', function () {
+    load_theme_textdomain('plstn-u', get_template_directory().'/resources/lang');
+
     /**
      * Disable full-site editing support.
      *
@@ -84,8 +86,8 @@ add_action('after_setup_theme', function () {
      * @link https://developer.wordpress.org/reference/functions/register_nav_menus/
      */
     register_nav_menus([
-        'primary_navigation' => __('Primary Navigation', 'sage'),
-        'footer_navigation' => __('Footer Navigation', 'sage'),
+        'primary_navigation' => __('Primary Navigation', 'plstn-u'),
+        'footer_navigation' => __('Footer Navigation', 'plstn-u'),
     ]);
 
     /**
@@ -162,12 +164,12 @@ add_action('widgets_init', function () {
     ];
 
     register_sidebar([
-        'name' => __('Primary', 'sage'),
+        'name' => __('Primary', 'plstn-u'),
         'id' => 'sidebar-primary',
     ] + $config);
 
     register_sidebar([
-        'name' => __('Footer', 'sage'),
+        'name' => __('Footer', 'plstn-u'),
         'id' => 'sidebar-footer',
     ] + $config);
 });

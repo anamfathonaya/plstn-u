@@ -13,24 +13,24 @@
         name="s"
         value="{{ $archive['query'] }}"
         autocomplete="off"
-        placeholder="{{ __('Cari berita…', 'sage') }}"
-        aria-label="{{ __('Cari berita', 'sage') }}"
+        placeholder="{{ __('Cari berita…', 'plstn-u') }}"
+        aria-label="{{ __('Cari berita', 'plstn-u') }}"
         class="min-w-0 flex-1 bg-transparent font-sans text-excerpt text-primary placeholder:text-muted focus:outline-none"
       >
-      <button type="submit" class="border border-subtle px-3 py-2 font-sans text-nav text-primary hover:border-strong">{{ __('Cari', 'sage') }}</button>
+      <button type="submit" class="border border-subtle px-3 py-2 font-sans text-nav text-primary hover:border-strong">{{ __('Cari', 'plstn-u') }}</button>
     </form>
   @endif
 
   @if (empty($archive['items']))
     <section class="flex flex-col gap-2 py-8" aria-live="polite">
-      <h2 class="font-serif text-card text-primary">{{ __('Tidak ada hasil', 'sage') }}</h2>
+      <h2 class="font-serif text-card text-primary">{{ __('Tidak ada hasil', 'plstn-u') }}</h2>
       <p class="font-sans text-excerpt text-muted">
-        {{ $archive['isSearch'] ? __('Coba kata kunci lain atau periksa ejaan Anda.', 'sage') : __('Belum ada berita di bagian ini.', 'sage') }}
+        {{ $archive['isSearch'] ? __('Coba kata kunci lain atau periksa ejaan Anda.', 'plstn-u') : __('Belum ada berita di bagian ini.', 'plstn-u') }}
       </p>
     </section>
   @else
     @if ($archive['isSearch'])
-      <p class="font-sans text-meta text-muted">{{ $archive['count'] }} {{ __('hasil ditemukan', 'sage') }}</p>
+      <p class="font-sans text-meta text-muted">{{ $archive['count'] }} {{ __('hasil ditemukan', 'plstn-u') }}</p>
     @endif
 
     <div class="grid gap-8 md:grid-cols-4">

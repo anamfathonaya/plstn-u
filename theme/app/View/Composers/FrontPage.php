@@ -15,8 +15,8 @@ class FrontPage extends Composer
         'front-page',
     ];
 
-    /** Bawaan rubrik blok kartu bila Customizer belum diisi (slug kategori, berurutan). */
-    public const SECTIONS = ['gaza', 'tepi-barat', 'internasional'];
+    /** Bawaan slot rubrik blok kartu (kosong: pilih kategori di Customizer). */
+    public const SECTIONS = ['', '', ''];
 
     /**
      * Rubrik blok kartu dari Customizer (3 slot), slot kosong dilewati, duplikat dibuang.

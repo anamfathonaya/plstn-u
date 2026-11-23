@@ -12,7 +12,7 @@
 <dialog
   id="nav-drawer"
   closedby="any"
-  aria-label="{{ __('Menu navigasi', 'sage') }}"
+  aria-label="{{ __('Menu navigasi', 'plstn-u') }}"
   x-data="{ open: null }"
   x-on:open-nav-drawer.window="$el.showModal()"
   {{ $attributes->class('m-0 mr-auto h-dvh max-h-none w-80 max-w-full bg-canvas p-0 text-primary md:ml-auto md:mr-0') }}
@@ -26,13 +26,13 @@
         <span>{{ $siteName }}</span>
       </a>
       <form method="dialog" class="ml-auto">
-        <button type="submit" class="flex size-10 items-center justify-center" aria-label="{{ __('Tutup menu', 'sage') }}">
+        <button type="submit" class="flex size-10 items-center justify-center" aria-label="{{ __('Tutup menu', 'plstn-u') }}">
           <svg class="size-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg>
         </button>
       </form>
     </div>
 
-    <nav class="flex-1 overflow-y-auto overscroll-contain" aria-label="{{ __('Menu utama', 'sage') }}">
+    <nav class="flex-1 overflow-y-auto overscroll-contain" aria-label="{{ __('Menu utama', 'plstn-u') }}">
       @if ($live)
         <a href="{{ $liveUrl }}" class="flex h-12 items-center gap-2 px-4 font-sans text-nav text-live">
           <span class="size-2 rounded-full bg-live" aria-hidden="true"></span>
@@ -54,7 +54,7 @@
                   class="flex size-10 items-center justify-center"
                   aria-expanded="false"
                   aria-controls="nav-sub-{{ $i }}"
-                  aria-label="{{ sprintf(__('Subkategori %s', 'sage'), $item['label']) }}"
+                  aria-label="{{ sprintf(__('Subkategori %s', 'plstn-u'), $item['label']) }}"
                   x-bind:aria-expanded="open === {{ $i }}"
                   x-on:click="open = open === {{ $i }} ? null : {{ $i }}"
                 >
